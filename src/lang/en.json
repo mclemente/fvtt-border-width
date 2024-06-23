@@ -1,0 +1,13 @@
+{
+	"BORDER_WIDTH": {
+		"Settings": {
+			"width": {
+				"Hint": "The default value for the border width."
+			},
+			"zoomScaling": {
+				"Name": "Zoom Scaling",
+				"Hint": "Scales the border width to the zoom scaling."
+			}
+		}
+	}
+}
