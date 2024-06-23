@@ -32,8 +32,8 @@ function refreshTokens() {
 	canvas.tokens.placeables.filter((t) => t.controlled).forEach((t) => refreshBorder(t));
 }
 
-function refreshBorder (token) {
-	let thickness = game.settings.get("border-width", "width")
+function refreshBorder(token) {
+	let thickness = game.settings.get("border-width", "width");
 	if (game.settings.get("border-width", "zoomScaling")) {
 		thickness /= Math.min(1, canvas.stage.scale.x);
 	}

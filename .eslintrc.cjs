@@ -173,7 +173,9 @@ module.exports = {
 		"spaced-comment": "warn",
 	},
 
-	globals: {},
+	globals: {
+		PIXI: false,
+	},
 
 	overrides: [
 		{
