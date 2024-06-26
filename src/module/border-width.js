@@ -26,6 +26,16 @@ Hooks.once("i18nInit", async function () {
 		type: Boolean,
 		onChange: refreshTokens,
 	});
+
+	game.settings.register("border-width", "circleBorders", {
+		name: "BORDER_WIDTH.Settings.circleBorders.Name",
+		hint: "BORDER_WIDTH.Settings.circleBorders.Hint",
+		scope: "world",
+		config: true,
+		default: false,
+		type: Boolean,
+		onChange: refreshTokens,
+	});
 });
 
 function refreshTokens() {
@@ -37,11 +47,17 @@ function refreshBorder(token) {
 	if (game.settings.get("border-width", "zoomScaling")) {
 		thickness /= Math.min(1, canvas.stage.scale.x);
 	}
+	const circleBorders = game.settings.get("border-width", "circleBorders");
+	const radius = (Math.min(token.w, token.h) / 2);
+	const draw = () => {
+		if (circleBorders) token.border.drawCircle(token.w / 2, token.h / 2, radius);
+		else token.border.drawShape(token.shape);
+	};
 	token.border.clear();
 	token.border.lineStyle({width: thickness, color: 0x000000, alignment: 0.75, join: PIXI.LINE_JOIN.ROUND});
-	token.border.drawShape(token.shape);
+	draw();
 	token.border.lineStyle({width: thickness / 2, color: 0xFFFFFF, alignment: 1, join: PIXI.LINE_JOIN.ROUND});
-	token.border.drawShape(token.shape);
+	draw();
 }
 
 Hooks.on("refreshToken", (token, flags) => {

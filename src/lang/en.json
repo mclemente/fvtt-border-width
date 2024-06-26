@@ -1,6 +1,10 @@
 {
 	"BORDER_WIDTH": {
 		"Settings": {
+			"circleBorders": {
+				"Name": "Circular Borders",
+				"Hint": "Draw borders as a circle instead of following the grid's shape."
+			},
 			"width": {
 				"Hint": "The default value for the border width."
 			},
