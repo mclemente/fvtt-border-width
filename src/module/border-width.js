@@ -24,7 +24,11 @@ Hooks.once("i18nInit", async function () {
 		config: true,
 		default: true,
 		type: Boolean,
-		onChange: refreshTokens,
+		onChange: (value) => {
+			if (value) Hooks.on("canvasPan", refreshTokens);
+			else Hooks.off("canvasPan", refreshTokens);
+			refreshTokens();
+		},
 	});
 
 	game.settings.register("border-width", "circleBorders", {
@@ -36,13 +40,18 @@ Hooks.once("i18nInit", async function () {
 		type: Boolean,
 		onChange: refreshTokens,
 	});
+
+	if (game.settings.get("border-width", "zoomScaling")) {
+		Hooks.on("canvasPan", refreshTokens);
+	}
 });
 
 function refreshTokens() {
-	canvas.tokens.placeables.filter((t) => t.controlled).forEach((t) => refreshBorder(t));
+	canvas.tokens.placeables.filter((t) => t.border.visible).forEach((t) => refreshBorder(t));
 }
 
 function refreshBorder(token) {
+	if (!token.border.visible) return;
 	let thickness = game.settings.get("border-width", "width");
 	if (game.settings.get("border-width", "zoomScaling")) {
 		thickness /= Math.min(1, canvas.stage.scale.x);
@@ -60,8 +69,5 @@ function refreshBorder(token) {
 	draw();
 }
 
-Hooks.on("refreshToken", (token, flags) => {
-	if (!flags.refreshBorder) refreshBorder(token);
-});
+Hooks.on("refreshToken", refreshBorder);
 
-Hooks.on("canvasPan", refreshTokens);
