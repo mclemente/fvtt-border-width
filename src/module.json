@@ -1,7 +1,7 @@
 {
 	"id": "border-width",
-	"title": "Border Width",
-	"description": "",
+	"title": "Token Border Width",
+	"description": "Change the border width's thickness, scale it to the zoom level, and draw circular borders.",
 	"authors": [
 		{
 			"name": "Matheus Clemente",
